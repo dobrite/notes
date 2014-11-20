@@ -1,0 +1,8 @@
+aaron quint
+ppprofiler
+~300 lines of code
+editable for our use
+  - rblineprof - all relative!
+
+horizontal performance
+stackprof + stackprof-remote # can run in production!

@@ -1,0 +1,43 @@
+Travel Eastward (Commands)
+Not westward (queries)
+
+1. Always return self
+  - tell, don't ask, use a class, not an if
+  - LoD, only access itself, any params passed in, and anything it created
+
+2. objects can query themselves
+
+3. Factories are exempt
+
+4. Break the rules sparingly
+
+class Person
+  attr_reader :address
+
+  def display_adddress(template=Template.new)
+    address.display(template)
+    self
+  end
+end
+
+class Address
+  def display(template)
+    template.display(to_value)
+    self
+  end
+
+  private
+  attr_reader :street, :city, :province, :postal_code
+
+  require 'ostruct'
+  def to_value
+    OpenStruct.new(street: street, city: city, etc.)
+  end
+end
+
+class Template
+  def display_address(address)
+    STDOUT.print(blah)
+    self
+  end
+end

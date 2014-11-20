@@ -1,0 +1,88 @@
+JSON/XML APIs
+github.com/CodingZeal/RubyConf2014
+# check out Representable gem to include into Representation sub-classes (Election)
+
+Rapidily mapping APIs
+
+lookup decorator pattern
+
+consume
+ - connection:
+   - relationship manager
+     holds "translation table"
+     hides URLs/sockets etc. from rest of app
+coerce
+  - classes and instances with JSON return
+    OpenStruct
+consolidate
+
+class Connection
+  include HTTParty
+  DEFAULT_API_VERSION = "2"
+  DEFAULT_BASE_URI = "https://googleapis.com/civicinfo"
+  # API keys etc
+
+  base_uri DEAFULT_BASE_URI # HTTParty specific
+
+  def initialize(options={})
+    @api_version = options.fetch(:api_version, DEFAULT_API_VERSION)
+    @query       = options.fetch(:query, DEFAULT_API_VERSION)
+  end
+
+  def query(params={})
+    @query.update(params)
+  end
+end
+
+# conn = Connection.new ( api_version : "2" )
+# conn.query( key: "secret" )
+
+# Client object - Routing and Collection: "imperitive shell"
+
+class Client
+  def initialize(conn, routes)
+    @conn = conn
+    @routes = routes
+  end
+  def method_missing(method)
+    route_map = @routes.fetch(method)
+    http_method = route_map.fetch(:method)
+    relative_path = route_map.fetch(:path)
+    @conn.send(http_method, relative_path)
+  end
+end
+
+# routes = {
+  elections: {
+    method: "get",
+    path: "/elections"
+  }
+}
+
+# Coerce #instance orientated architecture - using classes rather than primatives (Hashes, Arrays) for API response data
+
+require "ostruct"
+
+class Representation < OpenStruct
+  attr_reader :parent, :children
+
+  def initialize(representation={}, parent=nil)
+    super(representation)
+
+    @parent = parent
+    @children = []
+
+    bind_parent(parent) # make self the child of parent
+    represent_children)representation)
+  end
+end
+
+class Election < Representation
+  include ActiveModel::Validations # can do this since it's a class (not a primative like Hash)
+end
+
+# Catch errors, release patches
+## then fix for reals
+use fetch
+elections[0].fetch("location") # tells you that your data response changed and gives a better error
+  .fetch("locations", { address : "Not determined" })

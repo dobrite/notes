@@ -1,0 +1,46 @@
+1. Think long term
+  - your api is a contract
+    - think through every aspect, who is it for?
+    - what do they need access to?
+    - involve users in the design process
+  - versioning is not a solution
+  - understand you suck at desgin
+
+2. understand what you're building
+3. utilize spec driven development
+4. incorporate best practices
+
+# libraries to prototype apis
+RAML
+swagger
+IO Docs
+API <something>
+
+use nouns (users vs createUser, getUser, deleteUser)
+use CRUD: create (POST), read (GET), update (PUT - complete overwrite, PATCH - update in place), delete (DELETE)
+use hypermedia (HATEOAS) - direct users to what they can do next
+  HAL (nestable)
+  JSON-LD
+  JSON API
+  Siren
+
+  i.e.
+
+  _links {
+    edit: <link>
+      href: /api/user/id/1
+    message:
+      href: /api/message/id/1/lname/last
+  }
+
+use Accept/Cotent-Type headers (application/json or application/xml)
+use response codes POST is 201, 304 not modified
+
+{
+  exception: {
+    code: 'e2344'
+    message: 'missing UserId'
+    description: 'a userid is required'
+    documentation: '<link to docs>'
+  }
+}

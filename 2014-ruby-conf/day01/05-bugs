@@ -1,0 +1,11 @@
+add runtime checks (asserts) for invarients
+error for finds. PlanPerson.find # blow up, vs @organization.plan.plan_person
+
+write checks outside of the normal flow
+can keep alternate code flow simple to reduce chance of bug
+
+safe migrations
+monkey patch asserts into libraries
+tell rails to ignore columns excluded categories (on staging)
+
+sanity checks in test suite that will blow up (some id needs an index)

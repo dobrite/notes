@@ -1,0 +1,13 @@
+Ruby idioms
+
+ENV.fetch("RUBY_VERSION") # raises IndexError
+ENV.fetch("RUBY_VERSION") { "2.1.4" }
+ENV.fetch("RUBY_VERSION") { raise Error, "blah" }
+
+h = Hash.new(:not_found)
+h[:doesnt_exist] # :not_found
+
+Tag Module
+
+blue green deployment
+idea: set 10s key for exception that triggers rollback?
